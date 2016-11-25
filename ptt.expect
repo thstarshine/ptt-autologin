@@ -1,0 +1,43 @@
+#!/usr/bin/expect -f
+
+set id [lrange $argv 0 0]
+set password [lrange $argv 1 1]
+set timeout 30
+
+spawn ssh bbsu@ptt.cc
+
+expect "new*"
+send "$id\r"
+
+expect {
+  "密碼:*" {
+    send "$password\r"
+  }
+
+  timeout {
+    exit
+  }
+}
+
+expect {
+
+  "您想刪除其他重複登入的連線嗎" {
+    send "n\r"
+    exp_continue
+  }
+
+  "請按任意鍵繼續" {
+    send "\r"
+    exp_continue
+  }
+
+  "批踢踢實業坊" {
+    exit
+  }
+
+  timeout {
+    exit
+  }
+
+}
+
