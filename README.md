@@ -1,7 +1,7 @@
 **Run**
 
 ```
-expect ptt.expect
+expect ptt.expect ${user_id} ${password}
 ```
 
 
