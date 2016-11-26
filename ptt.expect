@@ -3,13 +3,26 @@
 set id [lrange $argv 0 0]
 set password [lrange $argv 1 1]
 set timeout 30
+#log_file -noappend /tmp/ptt.expect.log
 
+#send_log "This line goes into the log file"
 spawn ssh bbsu@ptt.cc
 
-expect "new*"
-send "$id\r"
+expect {
+
+  "(yes/no)*" {
+    send "yes\r"
+    exp_continue
+  }
+
+  "new*" {
+    send "$id\r"
+  }
+  
+}
 
 expect {
+
   "密碼:*" {
     send "$password\r"
   }
@@ -17,6 +30,7 @@ expect {
   timeout {
     exit
   }
+  
 }
 
 expect {
@@ -38,6 +52,6 @@ expect {
   timeout {
     exit
   }
-
+  
 }
 
