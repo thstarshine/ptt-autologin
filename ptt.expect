@@ -40,6 +40,11 @@ expect {
     exp_continue
   }
 
+  "錯誤嘗試的記錄嗎" {
+    send "Y\r"
+    exp_continue
+  }
+
   "請按任意鍵繼續" {
     send "\r"
     exp_continue
